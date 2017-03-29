@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Vis\\SitemapGenerator\\SitemapGenerator' => $baseDir . '/src/Models/SitemapGenerator.php',
     'Vis\\SitemapGenerator\\SitemapGeneratorController' => $baseDir . '/src/Http/Controllers/SitemapGeneratorController.php',
-    'Vis\\SitemapGenerator\\SitemapGeneratorModel' => $baseDir . '/src/Models/SitemapGeneratorModel.php',
 );

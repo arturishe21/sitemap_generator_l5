@@ -1,4 +1,5 @@
 Model based sitemap generator
+Generated Sitemap will be available at http(s)://yoursite.com/sitemap.xml
 
 Add this to composer.json require section
 ```json
@@ -17,18 +18,29 @@ Add SitemapGeneratorServiceProvider to ServiceProviders in config/app.php
 
 Publish sitemap view
 ```php
-    php artisan vendor:publish --tag=sitemap-generator-view --force
+    php artisan vendor:publish --provider="Vis\SitemapGenerator\SitemapGeneratorServiceProvider" --force
 ```
 
-Publish config and define your models in it
+Add your models to config at app/config/sitemap-generator/sitemap.php
+
+Short example that will use default options
 ```php
-    php artisan vendor:publish --tag=sitemap-generator-config --force
+    'models' => ([
+        'Tree' => [
+            'changefreq'       => "daily",
+            'priority'         => 0.7,
+        ],
+    ]),
 ```
 
 Full example of possible options
 ```php
     'models' => ([
-        'Tree' => [
+        'Tree_1' => [
+            //If this param is set model name will be taken from here rather then from array key
+            //This allows to have multiple request to single model without overriding results
+            'model' => "Tree",
+
             // Valid values are "always|hourly|daily|weekly|monthly|yearly|never"
             'changefreq'       => "daily",
 
@@ -45,7 +57,7 @@ Full example of possible options
             // optional property. default(if removed) - "is_active", set false to disable or set your field name
             'is_active_field'  => "is_active",
 
-            // optional property allows to specify query, can be removed if not required
+            // optional property. allows to specify query, can be removed if not required
             'additional_where' => [
                 'template' => [
                     'sign'  => '!=',
@@ -55,16 +67,3 @@ Full example of possible options
         ],
     ]),
 ```
-
-Short example that will use default options
-```php
-    'models' => ([
-        'Tree' => [
-            'changefreq'       => "daily",
-            'priority'         => 0.7,
-        ],
-    ]),
-```
-
-
-Generated Sitemap will be available at http://yoursite.com/sitemap.xml

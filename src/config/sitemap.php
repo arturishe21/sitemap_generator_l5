@@ -15,7 +15,11 @@ return array(
      */
     'models' => ([
 
-        'Tree' => [
+        'Tree_1' => [
+            //If this param is set model name will be taken from here rather then from array key
+            //This allows to have multiple request to single model without overriding results
+            'model' => "Tree",
+
             // Valid values are "always|hourly|daily|weekly|monthly|yearly|never"
             'changefreq'       => "daily",
 
@@ -32,13 +36,17 @@ return array(
             // optional property. default(if removed) - "is_active", set false to disable or set your field name
             'is_active_field'  => "is_active",
 
-            // optional property allows to specify query, can be removed if not required
+            // optional property. allows to specify query, can be removed if not required
             'additional_where' => [
                 'template' => [
                     'sign'  => '!=',
                     'value' => 'main'
                 ],
             ],
+        ],
+
+        'News' => [
+
         ],
     ]),
 );

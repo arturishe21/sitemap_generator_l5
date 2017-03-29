@@ -25,18 +25,14 @@ class SitemapGeneratorController extends Controller
 
         $models = $this->getConfigValue('models');
 
-        $sitemap = new SitemapGeneratorModel();
-        $sitemap->addMainPage();
+        $sitemap = new SitemapGenerator();
 
         foreach ($models as $model => $params) {
-            $sitemap->getEntities($model, $params);
+            $sitemap->setDefaultState()->setModel($model)->setParams($params)->getEntitiesLinks();
         }
 
         $view = View::make('sitemap-generator.sitemap')->with('links', $sitemap->getLinks());
 
         return Response::make($view, '200')->header('Content-Type', 'text/xml');
     }
-
-
-
 }
