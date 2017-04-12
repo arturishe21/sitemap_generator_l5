@@ -2,9 +2,10 @@
 
 class SitemapGenerator
 {
-    private $links;
+    private $links = [];
 
     private $model;
+    private $url;
 
     private $changefreq;
     private $priority;
@@ -13,8 +14,12 @@ class SitemapGenerator
     private $is_active;
     private $additional_where;
 
-    public function setDefaultState()
+    private function setDefaultState()
     {
+
+        $this->model  = "";
+        $this->url = "";
+
         $this->changefreq = "weekly";
         $this->priority   = '0.5';
         $this->url_method = "getUrl";
@@ -28,7 +33,7 @@ class SitemapGenerator
      * @param string $model
      * @return $this
      */
-    public function setModel($model)
+    private function setModel($model)
     {
         $this->model = $model;
         return $this;
@@ -38,13 +43,22 @@ class SitemapGenerator
      * @param array $params
      * @return $this
      */
-    public function setParams($params)
+    private function setParams($params)
     {
         foreach($params as $key => $value){
             $this->$key = $value;
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function getConfigValue($value)
+    {
+        return \Config::get('sitemap-generator.sitemap.'.$value);
     }
 
     /**
@@ -86,7 +100,7 @@ class SitemapGenerator
     private function getUrlMethod($link)
     {
         $field = $this->url_method;
-        return $field ? asset($link->$field()) : "/" ;
+        return $field ? $link->$field() : "/" ;
     }
     /**
      * @param object
@@ -101,27 +115,30 @@ class SitemapGenerator
     /**
      * @return mixed
      */
-    public function getLinks()
+    private function getLinks()
     {
         return $this->links;
-    }
-
-    public function __construct()
-    {
-        $this->addToLinks(asset("/"));
     }
 
     private function addToLinks($url, $date = null)
     {
         $this->links[$url] = [
-            'url'        => $url,
+            'url'        => asset($url),
             'date'       => $date,
             'changefreq' => $this->getChangefreq(),
             'priority'   => $this->getPriority(),
         ];
     }
 
-    public function getEntitiesLinks()
+    private function getCustomLink()
+    {
+        $this->addToLinks(
+            $this->url     ?: $this->model,
+            $this->lastmod ?: ""
+        );
+    }
+
+    private function getModelLinks()
     {
         $model = new $this->model;
 
@@ -141,6 +158,45 @@ class SitemapGenerator
                 $this->getLastmod($link)
             );
         }
+    }
+
+    private function handleCustomLinks()
+    {
+        $links = $this->getConfigValue('custom_links');
+
+        if(empty($links)){
+            return false;
+        }
+
+        foreach ($links as $key => $params) {
+            $this->setDefaultState()->setModel($key)->setParams($params)->getCustomLink();
+        }
+
+        return true;
+    }
+
+    private function handleModelsLinks()
+    {
+        $models = $this->getConfigValue('models');
+
+        if(empty($models)){
+            return false;
+        }
+
+        foreach ($models as $key => $params) {
+            $this->setDefaultState()->setModel($key)->setParams($params)->getModelLinks();
+        }
+
+        return true;
+    }
+
+
+    public function makeSitemap()
+    {
+        $this->handleCustomLinks();
+        $this->handleModelsLinks();
+
+        return $this->getLinks();
     }
 
 }

@@ -16,13 +16,14 @@ Add SitemapGeneratorServiceProvider to ServiceProviders in config/app.php
    Vis\SitemapGenerator\SitemapGeneratorServiceProvider::class,
 ```
 
-Publish sitemap view
+Publish sitemap view and config
 ```php
     php artisan vendor:publish --provider="Vis\SitemapGenerator\SitemapGeneratorServiceProvider" --force
 ```
 
-Add your models to config at app/config/sitemap-generator/sitemap.php
+Add your models\custom urls to config at app/config/sitemap-generator/sitemap.php
 
+Models
 Short example that will use default options
 ```php
     'models' => ([
@@ -62,6 +63,32 @@ Full example of possible options
                     'value' => 'main'
                 ],
             ],
+        ],
+    ]),
+```
+
+Custom links
+Short example that will use default options
+```php
+       '/x' => [
+        ],
+```
+
+Full example of possible options
+```php
+    'custom_links' => ([
+        '/' => [
+            //If this param is set url be taken from here rather then from array key
+            'url' => "/",
+
+            // Valid values are "always|hourly|daily|weekly|monthly|yearly|never"
+            'changefreq' => "daily",
+
+            // Valid values range from 0.0 to 1.0.
+            'priority'   => 1,
+
+            // Valid values is anything parsable by strtotime method
+            'lastmod'    => "2017-02-20 13:32:09",
         ],
     ]),
 ```

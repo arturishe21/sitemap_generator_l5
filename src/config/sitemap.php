@@ -21,22 +21,22 @@ return array(
             'model' => "Tree",
 
             // Valid values are "always|hourly|daily|weekly|monthly|yearly|never"
-            'changefreq'       => "daily",
+            'changefreq' => "daily",
 
             // Valid values range from 0.0 to 1.0.
-            'priority'         => 0.7,
+            'priority'   => 0.7,
 
-            // method that will be called upon model to get Url of entity
-            // default(if removed) - "getUrl" or set your method name
-            'url_method'   => "getUrl",
+            // Method that will be called upon model to get Url of entity
+            // Default(if removed) - "getUrl" or set your method name
+            'url_method' => "getUrl",
 
-            // optional property. default(if removed) - "updated_at", set false to disable or set your field name
+            // Optional property. Default(if removed) - "updated_at", set false to disable or set your field name
             'lastmod'    => "updated_at",
 
-            // optional property. default(if removed) - "is_active", set false to disable or set your field name
+            // Optional property. Default(if removed) - "is_active", set false to disable or set your field name
             'is_active'  => "is_active",
 
-            // optional property. allows to specify query, can be removed if not required
+            // Optional property. Allows to specify query, can be removed if not required
             'additional_where' => [
                 'template' => [
                     'sign'  => '!=',
@@ -45,4 +45,30 @@ return array(
             ],
         ],
     ]),
+
+    /**
+     * Array of custom links that will be added to sitemap
+     */
+    'custom_links' => ([
+
+        '/' => [
+            //If this param is set url be taken from here rather then from array key
+            'url' => "/",
+
+            // Valid values are "always|hourly|daily|weekly|monthly|yearly|never"
+            'changefreq' => "daily",
+
+            // Valid values range from 0.0 to 1.0.
+            'priority'   => 1,
+
+            // Valid values is anything parsable by strtotime method
+            'lastmod'    => "2017-02-20 13:32:09",
+        ],
+
+        '/x' => [
+        ],
+
+    ])
+
+
 );
