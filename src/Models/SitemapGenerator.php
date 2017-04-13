@@ -27,32 +27,35 @@ class SitemapGenerator
         $this->links = array_merge($this->links, $links);
     }
 
-    private function handleModelsLinks()
+    private function getModelName($type)
     {
-        $links = $this->getConfigValue('models');
-
-        if(empty($links)){
-            return false;
+        switch ($type) {
+            case 'models':
+                $modelName = "SitemapModel";
+                break;
+            case 'custom_links':
+                $modelName = "SitemapLink";
+                break;
+            default:
+                $modelName = null;
+                break;
         }
 
-        foreach ($links as $key => $params) {
-            $links = (new SitemapModel())->setParams($params)->getLinksArray();
-            $this->addToLinks($links);
-        }
-
-        return true;
+        //fixme is this good enough?
+        return __NAMESPACE__ . '\\' .$modelName;
     }
 
-    private function handleCustomLinks()
+    private function handleLinks($type)
     {
-        $links = $this->getConfigValue('custom_links');
+        $links     = $this->getConfigValue($type);
+        $typeModel = $this->getModelName($type);
 
-        if(empty($links)){
+        if(empty($links) || !$typeModel){
             return false;
         }
 
         foreach ($links as $key => $params) {
-            $links = (new SitemapLink())->setParams($params)->getLinksArray();
+            $links = (new $typeModel($key,$params))->getLinksArray();
             $this->addToLinks($links);
         }
 
@@ -61,8 +64,8 @@ class SitemapGenerator
 
     public function makeSitemap()
     {
-        $this->handleCustomLinks();
-        $this->handleModelsLinks();
+        $this->handleLinks('custom_links');
+        $this->handleLinks('models');
 
         return $this->getLinks();
     }

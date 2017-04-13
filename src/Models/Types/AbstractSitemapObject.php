@@ -7,14 +7,20 @@ abstract class AbstractSitemapObject
     protected $priority   = '0.5';
     protected $lastmod    = '';
 
-    //fixme this method looks bad
+
+    public function __construct($key, $params)
+    {
+        $this->setKey($key)->setParams($params);
+    }
+
+    //fixme this method and its usage looks bad
     abstract protected function setKey($key);
 
     /**
      * @param array $params
      * @return $this
      */
-    public function setParams($params)
+    protected function setParams($params)
     {
         if(is_array($params)){
             foreach($params as $key => $value){
