@@ -4,6 +4,7 @@ class SitemapModel extends AbstractSitemapObject
 {
 
     protected $model;
+    protected $entity;
 
     protected $lastmod_field    = "updated_at";
     protected $url_method       = "getUrl";
@@ -21,25 +22,23 @@ class SitemapModel extends AbstractSitemapObject
     }
 
     /**
-     * @param string $link
      * @return $this
      */
-    protected function setUrl($link)
+    protected function setUrl()
     {
         $field = $this->url_method;
-        $this->url = $field ? $link->$field() : "/" ;
+        $this->url = $field ? $this->entity->$field() : "/" ;
 
         return $this;
     }
 
     /**
-     * @param string $link
      * @return $this
      */
-    protected function setLastmod($link)
+    protected function setLastmod()
     {
         $field = $this->lastmod_field;
-        $this->lastmod = $field ? $link->$field : "";
+        $this->lastmod = $field ? $this->entity->$field : "";
 
         return $this;
     }
@@ -85,8 +84,8 @@ class SitemapModel extends AbstractSitemapObject
 
         $entities = $this->model->get();
 
-        foreach($entities as $key => $link){
-            $links[] = $this->setUrl($link)->setLastmod($link)->convertToArray();
+        foreach($entities as $this->entity){
+            $links[] = $this->setUrl()->setLastmod()->convertToArray();
         }
 
         return $links;

@@ -11,6 +11,11 @@ return array(
     'is_enabled' => true,
 
     /**
+     * Option to enabled\disable multi lang links in sitemap
+     */
+    'is_multi_language' => true,
+
+    /**
      * Array of models that will be used for classmap generation
      */
     'models' => [

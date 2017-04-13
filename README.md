@@ -23,6 +23,16 @@ Publish sitemap view and config
 
 Add your models\custom urls to config at app/config/sitemap-generator/sitemap.php
 
+Option to enabled\disable Sitemap generation, if disabled shows 404 error
+```php
+    'is_enabled' => true,
+```
+
+Option to enabled\disable multi lang links in sitemap
+```php
+    'is_multi_language' => true,
+```
+
 Models
 Short example that will use default options
 ```php

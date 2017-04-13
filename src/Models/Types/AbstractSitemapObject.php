@@ -78,15 +78,36 @@ abstract class AbstractSitemapObject
 
         return date("c", strtotime($this->getLastmod()));
     }
+
+    private function getAlternateUrls()
+    {
+        $alternateUrls = [];
+        $isMulti = \Config::get('sitemap-generator.sitemap.is_multi_language');
+
+        if($isMulti) {
+            $langs = \LaravelLocalization::getSupportedLocales();
+
+            foreach($langs as $lang => $description){
+
+                $alternateUrls[] = [
+                    'hreflang' => $lang,
+                    'href'     => \LaravelLocalization::getLocalizedURL($lang,$this->getAssetUrl()),
+                 ];
+            }
+        }
+
+        return $alternateUrls;
+    }
     
     //fixme is converting looks bad
     protected function convertToArray()
     {
         return [
-            'url'        => $this->getAssetUrl(),
-            'date'       => $this->getLastmodDate(),
-            'changefreq' => $this->getChangefreq(),
-            'priority'   => $this->getPriority(),
+            'url'            => $this->getAssetUrl(),
+            'alternate_urls' => $this->getAlternateUrls(),
+            'date'           => $this->getLastmodDate(),
+            'changefreq'     => $this->getChangefreq(),
+            'priority'       => $this->getPriority(),
         ];
     }
 
