@@ -26,15 +26,14 @@ Add your models\custom urls to config at app/config/sitemap-generator/sitemap.ph
 Models
 Short example that will use default options
 ```php
-    'models' => ([
-        'Tree' => [
-        ],
-    ]),
+    'models' => [
+        'Tree',
+    ],
 ```
 
 Full example of possible options
 ```php
-    'models' => ([
+    'models' => [
         'Tree_1' => [
             //If this param is set model name will be taken from here rather then from array key
             //This allows to have multiple request to single model without overriding results
@@ -64,19 +63,20 @@ Full example of possible options
                 ],
             ],
         ],
-    ]),
+    ],
 ```
 
 Custom links
 Short example that will use default options
 ```php
-       '/x' => [
-        ],
+'custom_links' => [
+        '/',
+    ],
 ```
 
 Full example of possible options
 ```php
-    'custom_links' => ([
+    'custom_links' => [
         '/' => [
             //If this param is set url be taken from here rather then from array key
             'url' => "/",
@@ -90,5 +90,5 @@ Full example of possible options
             // Valid values is anything parsable by strtotime method
             'lastmod'    => "2017-02-20 13:32:09",
         ],
-    ]),
+    ],
 ```

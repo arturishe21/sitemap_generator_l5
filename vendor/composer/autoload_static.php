@@ -21,8 +21,11 @@ class ComposerStaticInit3e48807a79c9aebda7a80aadaa689c10
     );
 
     public static $classMap = array (
+        'Vis\\SitemapGenerator\\AbstractSitemapObject' => __DIR__ . '/../..' . '/src/Models/Types/AbstractSitemapObject.php',
         'Vis\\SitemapGenerator\\SitemapGenerator' => __DIR__ . '/../..' . '/src/Models/SitemapGenerator.php',
         'Vis\\SitemapGenerator\\SitemapGeneratorController' => __DIR__ . '/../..' . '/src/Http/Controllers/SitemapGeneratorController.php',
+        'Vis\\SitemapGenerator\\SitemapLink' => __DIR__ . '/../..' . '/src/Models/Types/SitemapLink.php',
+        'Vis\\SitemapGenerator\\SitemapModel' => __DIR__ . '/../..' . '/src/Models/Types/SitemapModel.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
