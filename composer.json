@@ -1,6 +1,7 @@
 {
   "name": "vis/sitemap_generator_l5",
   "description": "Model based sitemap generator",
+  "license": "MIT",
   "authors": [
     {
       "name": "K.Gluschenko",

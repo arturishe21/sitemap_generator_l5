@@ -13,7 +13,7 @@ return array(
     /**
      * Option to enabled\disable multi lang links in sitemap
      */
-    'is_multi_language' => true,
+    'is_multi_language' => false,
 
     /**
      * Array of models that will be used for classmap generation
@@ -36,10 +36,10 @@ return array(
             'url_method' => "getUrl",
 
             // Optional property. Default(if removed) - "updated_at", set false to disable or set your field name
-            'lastmod_field'   => "updated_at",
+            'lastmod_field' => "updated_at",
 
             // Optional property. Default(if removed) - "is_active", set false to disable or set your field name
-            'is_active_field'  => "is_active",
+            'active_field'  => "is_active",
 
             // Optional property. Allows to specify query, can be removed if not required
             'additional_where' => [
@@ -55,7 +55,6 @@ return array(
      * Array of custom links that will be added to sitemap
      */
     'custom_links' => [
-
         '/' => [
             //If this param is set url be taken from here rather then from array key
             'url' => "/",
@@ -70,6 +69,5 @@ return array(
             'lastmod'    => "2017-02-20 13:32:09",
         ],
     ]
-
 
 );

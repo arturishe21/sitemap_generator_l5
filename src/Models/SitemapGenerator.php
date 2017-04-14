@@ -21,12 +21,18 @@ class SitemapGenerator
         return $this->links;
     }
 
+    /**
+     * @param array $links
+     */
     private function addToLinks(array $links)
     {
-        //fixme array merge wtf?
         $this->links = array_merge($this->links, $links);
     }
 
+    /**
+     * @param  string $type
+     * @return string $modelName
+     */
     private function getModelName($type)
     {
         switch ($type) {
@@ -41,26 +47,34 @@ class SitemapGenerator
                 break;
         }
 
-        //fixme is this good enough?
-        return __NAMESPACE__ . '\\' .$modelName;
-    }
-
-    private function handleLinks($type)
-    {
-        $links     = $this->getConfigValue($type);
-        $typeModel = $this->getModelName($type);
-
-        if(empty($links) || !$typeModel){
+        if (!$modelName) {
             return false;
         }
 
-        foreach ($links as $key => $params) {
-            $links = (new $typeModel($key,$params))->getLinksArray();
+        return __NAMESPACE__ . '\\' .$modelName;
+    }
+
+    /**
+     * @param  string $type
+     * @return boolean
+     */
+    private function handleLinks($type)
+    {
+        $entities  = $this->getConfigValue($type);
+        $typeModel = $this->getModelName($type);
+
+        if (empty($entities) || !$typeModel) {
+            return false;
+        }
+
+        foreach ($entities as $key => $params) {
+            $links = (new $typeModel($key, $params))->getLinksArray();
             $this->addToLinks($links);
         }
 
         return true;
     }
+
 
     public function makeSitemap()
     {

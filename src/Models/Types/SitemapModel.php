@@ -8,7 +8,7 @@ class SitemapModel extends AbstractSitemapObject
 
     protected $lastmod_field    = "updated_at";
     protected $url_method       = "getUrl";
-    protected $is_active_field  = 'is_active';
+    protected $active_field     = 'is_active';
     protected $additional_where = [];
 
     /**
@@ -54,9 +54,9 @@ class SitemapModel extends AbstractSitemapObject
     /**
      * @return string
      */
-    protected function getIsActiveField()
+    protected function getActiveField()
     {
-        return $this->is_active_field;
+        return $this->active_field;
     }
 
     /**
@@ -67,15 +67,17 @@ class SitemapModel extends AbstractSitemapObject
         return $this->changefreq;
     }
 
-    //fixme links array? wtf.
+    /**
+     * @return array $links
+     */
     public function getLinksArray()
     {
         $links = [];
 
         $this->model = new $this->model;
 
-        if($this->getIsActiveField()){
-            $this->model = $this->model->where($this->getIsActiveField(), "=", 1);
+        if($this->getActiveField()){
+            $this->model = $this->model->where($this->getActiveField(), "=", 1);
         }
 
         foreach ($this->getAdditionalWhere() as $fieldName => $condition) {

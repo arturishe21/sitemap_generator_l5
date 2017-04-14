@@ -12,7 +12,9 @@ class SitemapLink extends AbstractSitemapObject
         return $this;
     }
 
-    //fixme links array? wtf.
+    /**
+     * @return array $links
+     */
     public function getLinksArray()
     {
         $links[] = $this->convertToArray();

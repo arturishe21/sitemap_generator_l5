@@ -4,16 +4,18 @@ abstract class AbstractSitemapObject
 {
     protected $url        = '';
     protected $changefreq = 'weekly';
-    protected $priority   = '0.5';
+    protected $priority   = '0.7';
     protected $lastmod    = '';
 
-
+    /**
+     * @param string $key
+     * @param string $params
+     */
     public function __construct($key, $params)
     {
         $this->setKey($key)->setParams($params);
     }
 
-    //fixme this method and its usage looks bad
     abstract protected function setKey($key);
 
     /**
@@ -22,11 +24,11 @@ abstract class AbstractSitemapObject
      */
     protected function setParams($params)
     {
-        if(is_array($params)){
-            foreach($params as $key => $value){
+        if (is_array($params)) {
+            foreach ($params as $key => $value) {
                 $this->$key = $value;
             }
-        }else{
+        } else {
             $this->setKey($params);
         }
 
@@ -78,13 +80,16 @@ abstract class AbstractSitemapObject
      */
     private function getLastmodDate()
     {
-        if(!$this->getLastmod()){
+        if (!$this->getLastmod()) {
             return false;
         }
 
         return date("c", strtotime($this->getLastmod()));
     }
 
+    /**
+     * @return array $alternateUrls
+     */
     private function getAlternateUrls()
     {
         $alternateUrls = [];
@@ -98,14 +103,13 @@ abstract class AbstractSitemapObject
                 $alternateUrls[] = [
                     'hreflang' => $lang,
                     'href'     => \LaravelLocalization::getLocalizedURL($lang,$this->getAssetUrl()),
-                 ];
+                ];
             }
         }
 
         return $alternateUrls;
     }
     
-    //fixme is converting looks bad
     protected function convertToArray()
     {
         return [

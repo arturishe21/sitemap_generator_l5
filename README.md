@@ -50,22 +50,22 @@ Full example of possible options
             'model' => "Tree",
 
             // Valid values are "always|hourly|daily|weekly|monthly|yearly|never"
-            'changefreq'       => "daily",
+            'changefreq' => "daily",
 
             // Valid values range from 0.0 to 1.0.
-            'priority'         => 0.7,
+            'priority'   => 0.7,
 
-            // method that will be called upon model to get Url of entity
-            // default(if removed) - "getUrl" or set your method name
-            'url_method'   => "getUrl",
+            // Method that will be called upon model to get Url of entity
+            // Default(if removed) - "getUrl" or set your method name
+            'url_method' => "getUrl",
 
-            // optional property. default(if removed) - "updated_at", set false to disable or set your field name
-            'lastmod'    => "updated_at",
+            // Optional property. Default(if removed) - "updated_at", set false to disable or set your field name
+            'lastmod_field' => "updated_at",
 
-            // optional property. default(if removed) - "is_active", set false to disable or set your field name
-            'is_active'  => "is_active",
+            // Optional property. Default(if removed) - "is_active", set false to disable or set your field name
+            'active_field'  => "is_active",
 
-            // optional property. allows to specify query, can be removed if not required
+            // Optional property. Allows to specify query, can be removed if not required
             'additional_where' => [
                 'template' => [
                     'sign'  => '!=',
