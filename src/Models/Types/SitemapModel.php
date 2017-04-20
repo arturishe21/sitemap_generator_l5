@@ -81,7 +81,32 @@ class SitemapModel extends AbstractSitemapObject
         }
 
         foreach ($this->getAdditionalWhere() as $fieldName => $condition) {
-            $this->model = $this->model->where($fieldName, $condition['sign'], $condition['value']);
+
+            $condition['sign'] = strtoupper($condition['sign']);
+
+            switch ($condition['sign']) {
+                case "IN":
+                    $this->model = $this->model->whereIn($fieldName, $condition['value']);
+                    break;
+                case 'NOT IN':
+                    $this->model = $this->model->whereNotIn($fieldName, $condition['value']);
+                    break;
+                case "BETWEEN":
+                    $this->model = $this->model->whereBetween($fieldName, $condition['value']);
+                    break;
+                case 'NOT BETWEEN':
+                    $this->model = $this->model->whereNotBetween($fieldName, $condition['value']);
+                    break;
+                case "NULL":
+                    $this->model = $this->model->whereNull($fieldName);
+                    break;
+                case "NOT NULL":
+                    $this->model = $this->model->whereNotNull($fieldName);
+                    break;
+               default:
+                    $this->model = $this->model->where($fieldName, $condition['sign'], $condition['value']);
+                    break;
+            }
         }
 
         $entities = $this->model->get();
