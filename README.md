@@ -1,14 +1,9 @@
 Model based sitemap generator
 Generated Sitemap will be available at http(s)://yoursite.com/sitemap.xml
 
-Add this to composer.json require section
-```json
-     "vis/sitemap_generator_l5": "1.*"
-```
-
 Execute
 ```json
-    composer update
+    composer require "vis/sitemap_generator_l5":"1.*"
 ```
 
 Add SitemapGeneratorServiceProvider to ServiceProviders in config/app.php
