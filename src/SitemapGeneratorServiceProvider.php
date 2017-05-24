@@ -17,9 +17,7 @@ class SitemapGeneratorServiceProvider extends ServiceProvider
 
         $this->setupRoutes($this->app->router);
 
-        $this->publishes([
-            __DIR__.'/resources/views' => base_path('resources/views/sitemap-generator'),
-        ], 'sitemap-generator-view');
+        $this->loadViewsFrom(realpath(__DIR__ . '/resources/views'), 'sitemap');
 
         $this->publishes([
             __DIR__ . '/config' => config_path('sitemap-generator/')

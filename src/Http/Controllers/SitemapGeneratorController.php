@@ -19,7 +19,7 @@ class SitemapGeneratorController extends Controller
             abort(404);
         }
 
-        $view = View::make('sitemap-generator.sitemap')->with('links', $this->sitemap->makeSitemap());
+        $view = View::make('sitemap::sitemap')->with('links', $this->sitemap->makeSitemap());
 
         return Response::make($view, '200')->header('Content-Type', 'text/xml; charset="utf-8"');
     }
