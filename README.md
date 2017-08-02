@@ -11,7 +11,7 @@ Add SitemapGeneratorServiceProvider to ServiceProviders in config/app.php
    Vis\SitemapGenerator\SitemapGeneratorServiceProvider::class,
 ```
 
-Publish sitemap view and config
+Publish sitemap config
 ```php
     php artisan vendor:publish --provider="Vis\SitemapGenerator\SitemapGeneratorServiceProvider" --force
 ```

@@ -1,4 +1,6 @@
-<?php namespace Vis\SitemapGenerator;
+<?php
+
+namespace Vis\SitemapGenerator;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
@@ -6,21 +8,21 @@ use Illuminate\Support\Facades\View;
 
 class SitemapGeneratorController extends Controller
 {
-    private $sitemap;
-
-    public function __construct()
-    {
-        $this->sitemap = new SitemapGenerator();
-    }
-
+    /**
+     * Entry point for displaying sitemap
+     * @return mixed
+     */
     public function showSiteMapXML()
     {
-        if(!$this->sitemap->getConfigValue('is_enabled')){
+        $sitemap = new SitemapGenerator();
+
+        if (!$sitemap->getConfigValue('is_enabled')) {
             abort(404);
         }
 
-        $view = View::make('sitemap::sitemap')->with('links', $this->sitemap->makeSitemap());
+        $view = View::make('sitemap::sitemap')->with('links', $sitemap->makeSitemap());
 
         return Response::make($view, '200')->header('Content-Type', 'text/xml; charset="utf-8"');
     }
+
 }

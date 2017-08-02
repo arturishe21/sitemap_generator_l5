@@ -1,13 +1,39 @@
-<?php namespace Vis\SitemapGenerator;
+<?php
 
+namespace Vis\SitemapGenerator;
+
+/**
+ * Class AbstractSitemapObject
+ * @package Vis\SitemapGenerator
+ */
 abstract class AbstractSitemapObject
 {
-    protected $url        = '';
-    protected $changefreq = 'weekly';
-    protected $priority   = '0.7';
-    protected $lastmod    = '';
+    /**
+     * Url property
+     * @var string
+     */
+    protected $url = '';
 
     /**
+     * Change frequency property
+     * @var string
+     */
+    protected $changefreq = 'weekly';
+
+    /**
+     * Priority property
+     * @var string
+     */
+    protected $priority = '0.7';
+
+    /**
+     * Lastmod property
+     * @var string
+     */
+    protected $lastmod = '';
+
+    /**
+     * AbstractSitemapObject constructor
      * @param string $key
      * @param string $params
      */
@@ -16,9 +42,15 @@ abstract class AbstractSitemapObject
         $this->setKey($key)->setParams($params);
     }
 
+    /**
+     * Abstract method to detect which property should be filled in with config key
+     * @param $key
+     * @return mixed
+     */
     abstract protected function setKey($key);
 
     /**
+     * Sets all params
      * @param array $params
      * @return $this
      */
@@ -36,6 +68,7 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Returns url property
      * @return string
      */
     private function getUrl()
@@ -44,6 +77,7 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Returns changefreq property
      * @return string
      */
     private function getChangefreq()
@@ -52,6 +86,7 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Returns priority property
      * @return int
      */
     private function getPriority()
@@ -60,6 +95,7 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Returns lasmod property
      * @return string
      */
     private function getLastmod()
@@ -68,6 +104,7 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Returns asset url property
      * @return string
      */
     private function getAssetUrl()
@@ -76,6 +113,7 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Returns last mod date property in ISO 8601 date format
      * @return string
      */
     private function getLastmodDate()
@@ -88,28 +126,31 @@ abstract class AbstractSitemapObject
     }
 
     /**
+     * Gets alternate URLs for multiple languages
      * @return array $alternateUrls
      */
     private function getAlternateUrls()
     {
         $alternateUrls = [];
-        $isMulti = \Config::get('sitemap-generator.sitemap.is_multi_language');
+        $isMulti = config('sitemap-generator.sitemap.is_multi_language');
 
-        if($isMulti) {
-            $langs = \LaravelLocalization::getSupportedLocales();
-
-            foreach($langs as $lang => $description){
-
+        if ($isMulti) {
+            $languages = \LaravelLocalization::getSupportedLocales();
+            foreach ($languages as $language => $description) {
                 $alternateUrls[] = [
-                    'hreflang' => $lang,
-                    'href'     => \LaravelLocalization::getLocalizedURL($lang,$this->getAssetUrl()),
+                    'hreflang' => $language,
+                    'href'     => \LaravelLocalization::getLocalizedURL($language, $this->getAssetUrl()),
                 ];
             }
         }
 
         return $alternateUrls;
     }
-    
+
+    /**
+     * Converts data to proper array
+     * @return array
+     */
     protected function convertToArray()
     {
         return [
@@ -121,6 +162,10 @@ abstract class AbstractSitemapObject
         ];
     }
 
+    /**
+     * Returns array of links
+     * @return array
+     */
     abstract public function getLinksArray();
 
 }

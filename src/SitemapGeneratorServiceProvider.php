@@ -1,4 +1,6 @@
-<?php namespace Vis\SitemapGenerator;
+<?php
+
+namespace Vis\SitemapGenerator;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -48,10 +50,11 @@ class SitemapGeneratorServiceProvider extends ServiceProvider
     {
     }
 
+    /**
+     *
+     */
     public function provides()
     {
     }
+
 }
-
-
-

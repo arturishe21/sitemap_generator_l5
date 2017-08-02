@@ -1,19 +1,31 @@
-<?php namespace Vis\SitemapGenerator;
+<?php
 
+namespace Vis\SitemapGenerator;
+
+/**
+ * Class SitemapGenerator
+ * @package Vis\SitemapGenerator
+ */
 class SitemapGenerator
 {
+    /**
+     * Stores all links
+     * @var array
+     */
     private $links = [];
 
     /**
+     * Returns value from sitemap config
      * @param string $value
      * @return mixed
      */
     public function getConfigValue($value)
     {
-        return \Config::get('sitemap-generator.sitemap.'.$value);
+        return config('sitemap-generator.sitemap.' . $value);
     }
 
     /**
+     * Returns all links
      * @return mixed
      */
     private function getLinks()
@@ -22,6 +34,7 @@ class SitemapGenerator
     }
 
     /**
+     * Merges array to array of links
      * @param array $links
      */
     private function addToLinks(array $links)
@@ -30,6 +43,7 @@ class SitemapGenerator
     }
 
     /**
+     * Returns model name depending on config key
      * @param  string $type
      * @return string $modelName
      */
@@ -51,10 +65,11 @@ class SitemapGenerator
             return false;
         }
 
-        return __NAMESPACE__ . '\\' .$modelName;
+        return __NAMESPACE__ . '\\' . $modelName;
     }
 
     /**
+     * Handles all entities in sitemap config
      * @param  string $type
      * @return boolean
      */
@@ -75,7 +90,16 @@ class SitemapGenerator
         return true;
     }
 
+    /**
+     * Entry point to sitemap generator
+     * @return mixed
+     */
 
+    /*
+     * fixme
+     * instead of current realization where 'models' and 'custom_links' as separate sub-arrays
+     * all entities should have been listed in a single 'entities' array with 'type' key for modeltype definition
+     * */
     public function makeSitemap()
     {
         $this->handleLinks('custom_links');

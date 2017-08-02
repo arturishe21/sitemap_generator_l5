@@ -1,8 +1,11 @@
-<?php namespace Vis\SitemapGenerator;
+<?php
+
+namespace Vis\SitemapGenerator;
 
 class SitemapLink extends AbstractSitemapObject
 {
     /**
+     * Sets config key to url property
      * @param string $key
      * @return $this
      */
@@ -13,6 +16,7 @@ class SitemapLink extends AbstractSitemapObject
     }
 
     /**
+     * Returns array of links
      * @return array $links
      */
     public function getLinksArray()
