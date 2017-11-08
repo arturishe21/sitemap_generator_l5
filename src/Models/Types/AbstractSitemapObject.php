@@ -138,7 +138,7 @@ abstract class AbstractSitemapObject
             $languages = \LaravelLocalization::getSupportedLocales();
             foreach ($languages as $language => $description) {
                 $alternateUrls[] = [
-                    'hreflang' => $language,
+                    'hreflang' => $language == 'ua' ? 'uk' : $language,
                     'href'     => \LaravelLocalization::getLocalizedURL($language, $this->getAssetUrl()),
                 ];
             }
