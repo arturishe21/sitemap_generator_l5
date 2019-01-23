@@ -3,7 +3,7 @@ Generated Sitemap will be available at http(s)://yoursite.com/sitemap.xml
 
 Execute
 ```json
-    composer require "vis/sitemap_generator_l5":"1.*"
+    composer require "artur/sitemap_generator_l5":"1.*"
 ```
 
 Add SitemapGeneratorServiceProvider to ServiceProviders in config/app.php
