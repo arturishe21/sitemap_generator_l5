@@ -21,7 +21,13 @@ class SitemapGenerator
      */
     public function getConfigValue($value)
     {
-        return config('sitemap-generator.sitemap.' . $value);
+        $config = config('sitemap-generator.sitemap.' . $value);
+
+        if ($config instanceof \Closure) {
+            return $config();
+        }
+
+        return $config;
     }
 
     /**
